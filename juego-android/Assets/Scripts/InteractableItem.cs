@@ -30,6 +30,8 @@ public class InteractableItem : MonoBehaviour
         // Si el jugador toca el objeto, desaparecer
         if (collision.CompareTag("Player"))
         {
+            GameManager.instance.CollectItem(); // Modifica el GameManager
+            collision.GetComponent<PlayerController>().IncreaseGravity(); // Aumenta la gravedad
             Destroy(gameObject);
         }
     }

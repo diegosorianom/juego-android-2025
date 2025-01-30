@@ -4,7 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 5f; // Fuerza del impuslo vertical
     public float cooldownTime = 0.5f; // Tiempo de espera entre saltos (ajustable desde el inspector)
-    
+    public float gravityIncrease = 0.2f; // Aumento de la gravedad por objeto recogido
+
+    public bool useGravityLimit = false; // SI es true, ahy un máximo de gravedad
+    public float maxGravityScale = 5f; // Valor máximo de gravedad si se usa el límite
+
     private Rigidbody2D rb;
     private float lastJumpTime; // Tiempo en el que ocurrió el último salto
     private Vector2 jumpDirection = new Vector2(1, 1).normalized; // Dirección diagonal inicial (hacia arriba y derecha)
@@ -41,5 +45,22 @@ public class PlayerController : MonoBehaviour
     {
         // Cambiar la dirección horizontal del impulso al chocar con un objeto
         jumpDirection.x *= -1; // Invertir la dirección horizontal
+    }
+
+    public void IncreaseGravity()
+    {
+        if (useGravityLimit)
+        {
+            // Solo aumenta si no ha alcanzo el máximo
+            if (rb.gravityScale < maxGravityScale)
+            {
+                rb.gravityScale += gravityIncrease;
+            }
+        }
+        else
+        {
+            // Si no hay limite, sigue aumentando
+            rb.gravityScale += gravityIncrease;
+        }
     }
 }
