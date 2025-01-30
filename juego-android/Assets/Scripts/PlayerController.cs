@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D rb;
     private float lastJumpTime; // Tiempo en el que ocurrió el último salto
+    private Vector2 jumpDirection = new Vector2(1, 1).normalized; // Dirección diagonal inicial (hacia arriba y derecha)
 
     private void Start()
     {
@@ -30,9 +31,15 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         // Aplicar un impulso vertical al cubo
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
 
         // Registrar el momento del último salto
         lastJumpTime = Time.time;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Cambiar la dirección horizontal del impulso al chocar con un objeto
+        jumpDirection.x *= -1; // Invertir la dirección horizontal
     }
 }
