@@ -5,9 +5,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5f; // Fuerza del impuslo vertical
     public float cooldownTime = 0.5f; // Tiempo de espera entre saltos (ajustable desde el inspector)
     public float gravityIncrease = 0.2f; // Aumento de la gravedad por objeto recogido
-
-    public bool useGravityLimit = false; // SI es true, ahy un máximo de gravedad
+    public float gravityDecrease = 0.01f; // Cantidad de gravedad que disminuye por cada salto
+    public float minGravityScale = 1f; // Límite mínimo de gravedad
     public float maxGravityScale = 5f; // Valor máximo de gravedad si se usa el límite
+    public bool useGravityLimit = false; // SI es true, ahy un máximo de gravedad     
 
     private Rigidbody2D rb;
     private float lastJumpTime; // Tiempo en el que ocurrió el último salto
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
 
         // Aplicar un impulso vertical al cubo
         rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
+
+        // Reducir la gravedad, asegurando que no baje del mínimo permitido
+        rb.gravityScale = Mathf.Max(rb.gravityScale - gravityDecrease, minGravityScale);
 
         // Registrar el momento del último salto
         lastJumpTime = Time.time;
