@@ -153,7 +153,7 @@ public class Spawner : MonoBehaviour
         {
             return normalPrefab;
         }
-        else if (randomValue < 90f)
+        else if (randomValue < 85f)
         {
             return positivePrefab;
         }
