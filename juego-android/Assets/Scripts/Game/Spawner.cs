@@ -3,34 +3,40 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     //public GameObject prefab; // Prefab del objeto a spawnear
+    [Header("Prefabs objetos")]
     public GameObject normalPrefab;
     public GameObject positivePrefab;
     public GameObject negativePrefab;
-    public BoxCollider2D spawnArea; // Zona de spawn
 
+    [Header("Ajustes de spawn")]
+    public BoxCollider2D spawnArea; // Zona de spawn
     public float initialMinSpawnInterval = 2f; // Tiempo inicial mínimo entre spawns
     public float initialMaxSpawnInterval = 4f; // Tiempo inicial máximo entre spawns
     public float minSpawnInterval = 0.5f; // Límite inferior de spawn
     public float difficultyIncreaseRate = 0.05f; // Cuánto se reduce el intervalo de spawn
+    private float nextSpawnTime;
+    private float currentMinSpawnInterval;
+    private float currentMaxSpawnInterval;
+    private enum SpawnState { Normal, Frenesi, Calma }
+    private SpawnState currentState = SpawnState.Normal;
+    private SpawnState previousState;
+
+    [Header("Duración de estados")]
     public float frenesiDuration = 5f; // Duración del Frénesi
     public float calmaDuration = 10f; // Duración del modo Calma
     public float frenesiCooldown = 20f; // Tiempo antes de que pueda ocurrir otro Frénesi
-
-    public float normalRate = 80f; // Probabilidad de objeto normal
-    public float positiveRate = 95f; // Probabilidad de objeto positivo
-
-    private float timer;
-    private float nextSpawnTime;
-    private float elapsedTime = 0f; // Tiempo transcurrido en la partida
-    private float currentMinSpawnInterval;
-    private float currentMaxSpawnInterval;
     private float frenesiTimer = 0f;
     private float calmaTimer = 0f;
     private float frenesiCooldownTimer;
 
-    private enum SpawnState { Normal, Frenesi, Calma }
-    private SpawnState currentState = SpawnState.Normal;
-    private SpawnState previousState;
+    [Header("Ajustes de probabilidad")]
+    public float normalRate = 80f; // Probabilidad de objeto normal
+    public float positiveRate = 95f; // Probabilidad de objeto positivo    
+
+    [Header("Ajustes de la partida")]
+    private float timer;
+    private float elapsedTime = 0f; // Tiempo transcurrido en la partida
+
 
     private void Start()
     {

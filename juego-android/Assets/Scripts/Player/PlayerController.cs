@@ -3,21 +3,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Ajustes de salto")]
     public float jumpForce = 5f; // Fuerza del impuslo vertical
+    private float defaultJumpForce;
+    private float lastJumpTime; // Tiempo en el que ocurrió el último salto
+    private Vector2 jumpDirection = new Vector2(1, 1).normalized; // Dirección diagonal inicial (hacia arriba y derecha
+
+    [Header("Ajustes de cooldown")]
     public float cooldownTime = 0.5f; // Tiempo de espera entre saltos (ajustable desde el inspector)
+    public float cooldownTimeAdd = 1f; // Tiempo que se sumara al cooldown
+    private float defaultCooldownTime;
+
+    [Header("Ajustes de gravedad")]
     public float gravityIncrease = 0.2f; // Aumento de la gravedad por objeto recogido
     public float gravityDecrease = 0.01f; // Cantidad de gravedad que disminuye por cada salto
     public float minGravityScale = 1f; // Límite mínimo de gravedad
     public float maxGravityScale = 5f; // Valor máximo de gravedad si se usa el límite
     public bool useGravityLimit = false; // SI es true, ahy un máximo de gravedad     
-    public float cooldownTimeAdd = 1f; // Tiempo que se sumara al cooldown
-
+    
     private Rigidbody2D rb;
-    private float lastJumpTime; // Tiempo en el que ocurrió el último salto
-    private Vector2 jumpDirection = new Vector2(1, 1).normalized; // Dirección diagonal inicial (hacia arriba y derecha)
-
-    private float defaultJumpForce;
-    private float defaultCooldownTime;
 
     private void Start()
     {
@@ -54,8 +58,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Cambiar la dirección horizontal del impulso al chocar con un objeto
-        jumpDirection.x *= -1; // Invertir la dirección horizontal
+        // Verificar si el objeto con el que colisionó tiene el tag "Wall"
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            // Cambiar la dirección horizontal del impulso
+            jumpDirection.x *= -1; // Invertir la dirección horizontal
+        }
     }
 
     public void IncreaseGravity(bool doubleEffect = false)

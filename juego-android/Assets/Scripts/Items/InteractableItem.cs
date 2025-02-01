@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class InteractableItem : MonoBehaviour
 {
+   
     public enum ItemType { Normal, Positive, Negative }
     public ItemType itemType; // Tipo de objeto
 
+    [Header("Velocidad de movimiento")]
     public float minMoveSpeed = 1f; // Velocidad mínima de movimiento
     public float maxMoveSpeed = 3f; // Velocidad máxima de movimiento
-    public float moveSpeed; // Velocidad actual del objeto
+    private float moveSpeed; // Velocidad actual del objeto
 
+    [Header("Duración de efectos")]
     public float jumpBoostDuration = 5f; // Duración del aumento del salto
     public float cooldownIncreaseDuration = 5f; // Duración del aumento del cooldown
     public float jumpReductionDuration = 5f; // Duración para reducción del salto
