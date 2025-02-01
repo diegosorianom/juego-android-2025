@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
 
     [Header("Ajustes de spawn")]
     public BoxCollider2D spawnArea; // Zona de spawn
+    public float spawnOffset = 0.5f; // Cuánto se reduce el área de spawn en los lados
     public float initialMinSpawnInterval = 2f; // Tiempo inicial mínimo entre spawns
     public float initialMaxSpawnInterval = 4f; // Tiempo inicial máximo entre spawns
     public float minSpawnInterval = 0.5f; // Límite inferior de spawn
@@ -29,10 +30,6 @@ public class Spawner : MonoBehaviour
     private float calmaTimer = 0f;
     private float frenesiCooldownTimer;
 
-    [Header("Ajustes de probabilidad")]
-    public float normalRate = 80f; // Probabilidad de objeto normal
-    public float positiveRate = 95f; // Probabilidad de objeto positivo    
-
     [Header("Ajustes de la partida")]
     private float timer;
     private float elapsedTime = 0f; // Tiempo transcurrido en la partida
@@ -40,6 +37,8 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        AdjustSpawnAreaToScreen(); // Ajustar automaticamente el área de spawn
+
         // Inicializar valores correctamente
         currentMinSpawnInterval = initialMinSpawnInterval;
         currentMaxSpawnInterval = initialMaxSpawnInterval;
@@ -150,11 +149,11 @@ public class Spawner : MonoBehaviour
     {
         float randomValue = Random.value * 100; // Número aleatorio entre 0 y 100
 
-        if (randomValue < normalRate)
+        if (randomValue < 70f)
         {
             return normalPrefab;
         }
-        else if (randomValue < positiveRate)
+        else if (randomValue < 90f)
         {
             return positivePrefab;
         }
@@ -162,5 +161,31 @@ public class Spawner : MonoBehaviour
         {
             return negativePrefab;
         }
+    }
+
+    private void AdjustSpawnAreaToScreen()
+    {
+        if (spawnArea == null)
+        {
+            Debug.LogError("El BoxCollider2D del SpawnArea no está asignado en el Inspector.");
+            return;
+        }
+
+        Camera mainCamera = Camera.main;
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("No se encontró la cámara principal.");
+            return;
+        }
+
+        float screenHeight = mainCamera.orthographicSize * 2;
+        float screenWidth = screenHeight * mainCamera.aspect; // Ancho basado en la relación de aspecto
+
+        // Ajustar el tamaño del BoxCollider2D para que coincida con la pantalla
+        spawnArea.size = new Vector2(screenWidth - (spawnOffset * 2), spawnArea.size.y);
+        spawnArea.offset = new Vector2(0, spawnArea.offset.y);
+
+        Debug.Log($"SpawnArea ajustado: Ancho = {spawnArea.size.x}, Offset = {spawnArea.offset}");
     }
 }

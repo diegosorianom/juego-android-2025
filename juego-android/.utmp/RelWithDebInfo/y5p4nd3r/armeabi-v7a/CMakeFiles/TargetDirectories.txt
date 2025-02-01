@@ -1,0 +1,8 @@
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/CMakeFiles/edit_cache.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+E:/008 Github/juego-android-2025/juego-android/.utmp/RelWithDebInfo/y5p4nd3r/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
