@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject prefab; // Prefab del objeto a spawnear
+    //public GameObject prefab; // Prefab del objeto a spawnear
+    public GameObject normalPrefab;
+    public GameObject positivePrefab;
+    public GameObject negativePrefab;
     public BoxCollider2D spawnArea; // Zona de spawn
 
     public float initialMinSpawnInterval = 2f; // Tiempo inicial mínimo entre spawns
@@ -12,6 +15,9 @@ public class Spawner : MonoBehaviour
     public float frenesiDuration = 5f; // Duración del Frénesi
     public float calmaDuration = 10f; // Duración del modo Calma
     public float frenesiCooldown = 20f; // Tiempo antes de que pueda ocurrir otro Frénesi
+
+    public float normalRate = 80f; // Probabilidad de objeto normal
+    public float positiveRate = 95f; // Probabilidad de objeto positivo
 
     private float timer;
     private float nextSpawnTime;
@@ -131,6 +137,24 @@ public class Spawner : MonoBehaviour
         Vector2 spawnPosition = new Vector2(spawnX, spawnY);
 
         // Instanciar el objeto recolectable
-        Instantiate(prefab, spawnPosition, Quaternion.identity);
+        Instantiate(GetRandomPrefab(), spawnPosition, Quaternion.identity);
+    }
+
+    private GameObject GetRandomPrefab()
+    {
+        float randomValue = Random.value * 100; // Número aleatorio entre 0 y 100
+
+        if (randomValue < normalRate)
+        {
+            return normalPrefab;
+        }
+        else if (randomValue < positiveRate)
+        {
+            return positivePrefab;
+        }
+        else 
+        {
+            return negativePrefab;
+        }
     }
 }
